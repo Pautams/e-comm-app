@@ -52,7 +52,8 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
           <Image
             src={product.image}
             alt={product.name}
-            fill
+            height={300}
+            width={300}
             className="object-cover group-hover:scale-110 transition-transform duration-300"
           />
         ) : (
