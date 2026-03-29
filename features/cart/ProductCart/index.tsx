@@ -68,8 +68,7 @@ export function ProductCard({
           <Image
             src={product.image}
             alt={product.name}
-            height={300}
-            width={300}
+            fill
             className="object-cover group-hover:scale-110 transition-transform duration-300"
           />
         ) : (
