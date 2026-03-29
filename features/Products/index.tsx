@@ -7,8 +7,16 @@ import { useCart } from "@/shared/context/CartContext";
 import { products } from "./mock/mock.data";
 import { Button } from "@/shared/components/Buttons";
 
-export default function Products() {
-  const { addToCart } = useCart(); 
+interface ProductsProps {
+  favorites: Product[];
+  onToggleFavorite: (product: Product) => void;
+}
+
+export default function Products({
+  favorites,
+  onToggleFavorite,
+}: ProductsProps) {
+  const { addToCart } = useCart();
   const [activeFilter, setActiveFilter] = useState<string>("all");
 
   const handleAddToCart = (product: Product) => {
@@ -90,6 +98,8 @@ export default function Products() {
                 key={product.id}
                 product={product}
                 onAddToCart={handleAddToCart}
+                isFavorited={!!favorites.find((p) => p.id === product.id)}
+                onToggleFavorite={onToggleFavorite}
               />
             ))}
           </div>

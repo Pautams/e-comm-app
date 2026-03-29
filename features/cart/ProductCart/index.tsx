@@ -18,9 +18,16 @@ export interface Product {
 interface ProductCardProps {
   product: Product;
   onAddToCart: (product: Product) => void;
+  isFavorited: boolean;
+  onToggleFavorite: (product: Product) => void;
 }
 
-export function ProductCard({ product, onAddToCart }: ProductCardProps) {
+export function ProductCard({
+  product,
+  onAddToCart,
+  isFavorited,
+  onToggleFavorite,
+}: ProductCardProps) {
   const discount = product.originalPrice
     ? Math.round(
         ((product.originalPrice - product.price) / product.originalPrice) * 100,
@@ -42,8 +49,17 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
       )}
 
       {/* Wishlist Button */}
-      <IconButton className="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity bg-white dark:bg-slate-900 shadow-md rounded-full p-2">
-        <Heart className="w-5 h-5 text-foreground hover:text-destructive hover:fill-destructive transition-colors" />
+      <IconButton
+        className="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity bg-white dark:bg-slate-900 shadow-md rounded-full p-2"
+        onClick={() => onToggleFavorite(product)}
+      >
+        <Heart
+          className={`w-5 h-5 transition-colors ${
+            isFavorited
+              ? "text-destructive fill-destructive"
+              : "text-foreground hover:text-destructive"
+          }`}
+        />
       </IconButton>
 
       {/* Image */}

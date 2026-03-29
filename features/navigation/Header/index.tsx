@@ -6,9 +6,16 @@ import Link from "next/link";
 interface HeaderProps {
   cartCount: number;
   onCartClick: () => void;
+  favoritesCount: number;
+  onFavoritesClick: () => void;
 }
 
-export function Header({ cartCount, onCartClick }: HeaderProps) {
+export function Header({
+  cartCount,
+  onCartClick,
+  favoritesCount,
+  onFavoritesClick,
+}: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -60,7 +67,11 @@ export function Header({ cartCount, onCartClick }: HeaderProps) {
 
           {/* Actions */}
           <div className="flex items-center space-x-4">
-            <IconButton className="hidden md:flex">
+            <IconButton
+              className="hidden md:flex"
+              onClick={onFavoritesClick}
+              badge={favoritesCount}
+            >
               <Heart className="w-5 h-5" />
             </IconButton>
             <IconButton onClick={onCartClick} badge={cartCount}>
@@ -115,9 +126,9 @@ export function Header({ cartCount, onCartClick }: HeaderProps) {
               About
             </a>
             <div className="flex items-center space-x-4 pt-4 border-t border-border">
-              <button className="p-2 hover:bg-muted rounded-lg transition-colors">
+              <IconButton onClick={onFavoritesClick} badge={favoritesCount}>
                 <Heart className="w-5 h-5 text-foreground" />
-              </button>
+              </IconButton>
             </div>
           </nav>
         </div>
