@@ -3,28 +3,17 @@ import { useState } from "react";
 import { Sparkles, TrendingUp, Tag } from "lucide-react";
 import { toast, Toaster } from "sonner";
 import { Product, ProductCard } from "@/features/cart/ProductCart";
-import { CartItem } from "@/shared/context/CartContext";
+import { useCart } from "@/shared/context/CartContext";
 import { products } from "./mock/mock.data";
 import { Button } from "@/shared/components/Buttons";
 
 export default function Products() {
-  const [_, setCartItems] = useState<CartItem[]>([]);
+  const { addToCart } = useCart(); 
   const [activeFilter, setActiveFilter] = useState<string>("all");
 
   const handleAddToCart = (product: Product) => {
-    setCartItems((prev) => {
-      const existingItem = prev.find((item) => item.id === product.id);
-      if (existingItem) {
-        toast.success("Increased quantity in cart!");
-        return prev.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item,
-        );
-      }
-      toast.success("Added to cart!");
-      return [...prev, { ...product, quantity: 1 }];
-    });
+    addToCart(product);
+    toast.success("Added to cart!");
   };
 
   const filteredProducts =
